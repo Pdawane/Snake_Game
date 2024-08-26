@@ -10,6 +10,7 @@ let food = {
 };
 let score = 0;
 let highestScore = 0;
+let gameInterval;
 
 document.addEventListener('keydown', changeDirection);
 document.getElementById('resetBtn').addEventListener('click', resetGame);
@@ -86,18 +87,17 @@ function draw() {
     // Update the scoreboard
     document.getElementById('score').innerText = `Score: ${score}`;
     document.getElementById('highestScore').innerText = `Highest Score: ${highestScore}`;
-
-    setTimeout(draw, 100);
 }
 
 function resetGame() {
+    clearInterval(gameInterval);
     snake = [{ x: 10 * boxSize, y: 10 * boxSize }];
-    direction = 'stop';
+    direction = 'right';
     score = 0;
     food.x = Math.floor(Math.random() * 29) * boxSize;
     food.y = Math.floor(Math.random() * 29) * boxSize;
-    draw();
+    gameInterval = setInterval(draw, 100);
 }
 
 // Start the game
-draw();
+resetGame();
